@@ -11,6 +11,7 @@ export default function Menu() {
       price: "₹180",
       desc: "Rich espresso balanced with steamed milk and foam.",
       type: "Coffee",
+      tag: "Popular",
       icon: <Coffee className="w-6 h-6 text-[#8B5E3C]" />,
     },
     {
@@ -18,6 +19,7 @@ export default function Menu() {
       price: "₹200",
       desc: "Espresso, caramel syrup & frothy milk in harmony.",
       type: "Coffee",
+      tag: "Recommended",
       icon: <Coffee className="w-6 h-6 text-[#8B5E3C]" />,
     },
     {
@@ -39,6 +41,7 @@ export default function Menu() {
       price: "₹130",
       desc: "Crispy golden layers of buttery perfection.",
       type: "Pastries",
+      tag: "Best Seller",
       icon: <Croissant className="w-6 h-6 text-[#8B5E3C]" />,
     },
     {
@@ -60,6 +63,7 @@ export default function Menu() {
       price: "₹280",
       desc: "Creamy white sauce pasta cooked with herbs.",
       type: "Snacks",
+      tag: "Chef’s Pick",
       icon: <Sandwich className="w-6 h-6 text-[#8B5E3C]" />,
     },
   ];
@@ -75,87 +79,91 @@ export default function Menu() {
   return (
     <section
       id="menu"
-      className="py-24 bg-[#FFF9F5] text-[#3E2E26] text-center px-6 md:px-20 overflow-hidden"
+      className="py-24 bg-[#FFF9F5] text-[#3E2E26] text-center px-6 md:px-20"
     >
-      {/* Title */}
-      <motion.h2
-        className="text-4xl font-bold mb-10 text-[#8B5E3C] font-playfair"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-      >
-        Our Menu
-      </motion.h2>
+      {/* Heading */}
+      <h2 className="text-4xl font-bold mb-4 text-[#8B5E3C] font-playfair">
+        What You’ll Love Here
+      </h2>
 
-      {/* Category Buttons */}
-      <motion.div
-        className="flex flex-wrap justify-center gap-3 mb-12"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-      >
+      <p className="text-[#6B4F3F] mb-10">
+        Our most loved drinks & bites, crafted fresh every day.
+      </p>
+
+      {/* Categories */}
+      <div className="flex flex-wrap justify-center gap-3 mb-12">
         {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
-            className={`px-5 py-2.5 rounded-full border transition-all duration-300 text-sm md:text-base ${
+            className={`px-5 py-2.5 rounded-full border transition-all ${
               activeCategory === cat
-                ? "bg-[#C27A48] text-white border-[#C27A48] shadow-lg"
-                : "bg-[#FFF9F5] border-[#EAD7C5] text-[#3E2E26] hover:bg-[#C27A48]/10"
+                ? "bg-[#C27A48] text-white border-[#C27A48]"
+                : "border-[#EAD7C5] hover:bg-[#C27A48]/10"
             }`}
           >
             {cat}
           </button>
         ))}
-      </motion.div>
+      </div>
 
-      {/* Menu Grid */}
-      <motion.div
-        className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <AnimatePresence mode="wait">
+      {/* Grid */}
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <AnimatePresence>
           {filteredItems.map((item) => (
             <motion.div
               key={item.name}
               layout
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.3 }}
-              className="bg-[#FFFFFF]/90 border border-[#EAD7C5] p-6 rounded-2xl hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col items-start text-left"
+              className="bg-white border border-[#EAD7C5] p-6 rounded-2xl hover:shadow-lg transition-all flex flex-col"
             >
+              {/* Tag */}
+              {item.tag && (
+                <span className="text-xs bg-[#C27A48] text-white px-3 py-1 rounded-full w-fit mb-3">
+                  {item.tag}
+                </span>
+              )}
+
               <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 rounded-full bg-[#C27A48]/10 border border-[#C27A48]/30">
+                <div className="p-2 rounded-full bg-[#C27A48]/10">
                   {item.icon}
                 </div>
                 <h3 className="text-xl font-semibold text-[#8B5E3C]">
                   {item.name}
                 </h3>
               </div>
-              <p className="text-[15px] text-[#3E2E26]/80 mb-4 leading-relaxed">
+
+              <p className="text-sm text-[#3E2E26]/80 mb-4">
                 {item.desc}
               </p>
-              <p className="text-[#C27A48] font-semibold mt-auto">{item.price}</p>
+
+              <div className="flex items-center justify-between mt-auto">
+                <span className="text-[#C27A48] font-semibold">
+                  {item.price}
+                </span>
+
+                <a
+                  href="https://wa.me/917795116095"
+                  target="_blank"
+                  className="text-sm text-[#8B5E3C] underline hover:text-[#C27A48]"
+                >
+                  Order →
+                </a>
+              </div>
             </motion.div>
           ))}
         </AnimatePresence>
-      </motion.div>
+      </div>
 
-      {/* Section Note */}
-      <motion.p
-        className="mt-12 text-[#3E2E26]/70 text-sm italic"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.8 }}
-      >
-        * All our drinks and pastries are freshly prepared on order *
-      </motion.p>
+      {/* Bottom CTA */}
+      <div className="mt-14">
+        <a
+          href="https://wa.me/917795116095"
+          target="_blank"
+          className="bg-[#C27A48] hover:bg-[#A96539] text-white px-8 py-3 rounded-full shadow-lg transition-all"
+        >
+          Order Your Favorite Now ☕
+        </a>
+      </div>
     </section>
   );
 }
